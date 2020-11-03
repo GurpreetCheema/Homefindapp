@@ -6,47 +6,47 @@ import { PlacesPage } from './places.page';
 const routes: Routes = [
   {
     path: 'tabs',
-    component: PlacesPage, 
+    component: PlacesPage,
     children: [
-    { 
-      path: 'discover', children: [
-        {
-          path: '',
-          loadChildren: './discover/discover.module#DiscoverPageModule'
-        },
-        {
-          path: 'placeId',
-          loadChildren: './discover/place-detail/place-detail.module#PlaceDetailPageModule'
-        }
-
-      ]
-    }, 
-    {
-      path: 'offers',
-      children: [
-        {
-          path:'',
-          loadChildren: './offers/offers.module#OffersPageModule'
-        },
-        {
-          path: 'new',
-          loadChildren: './offers/new-offer/new-offer.module#NewOfferPageModule'
-        },
-        {
-          path: 'edit/:placeId',
-          loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
-        },
-        {
-          path: ':placeId',
-          loadChildren: './offers.offer-bookings/offer-bookings.module#OfferBookingsPageModule'
-        }
-      ]
-    },
-    {
-      path: '',
-      redirectTo: '/places/tabs/discover',
-      pathMatch: 'full'
-    }
+      {
+        path: 'discover',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverPageModule)
+          },
+          {
+            path: ':placeId',
+            loadChildren: () => import('./discover/place-detail/place-detail.module').then(m => m.PlaceDetailPageModule)
+          }
+        ]
+      },
+      {
+        path: 'offers',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./offers/offers.module').then(m => m.OffersPageModule)
+          },
+          {
+            path: 'new',
+            loadChildren: () => import('./offers/new-offer/new-offer.module').then(m => m.NewOfferPageModule)
+          },
+          {
+            path: 'edit/:placeId',
+            loadChildren: () => import('./offers/edit-offer/edit-offer.module').then(m => m.EditOfferPageModule)
+          },
+          {
+            path: ':placeId',
+            loadChildren: () => import('./offers/offer-bookings/offer-bookings.module').then(m => m.OfferBookingsPageModule)
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/places/tabs/discover',
+        pathMatch: 'full'
+      }
     ]
   },
   {
